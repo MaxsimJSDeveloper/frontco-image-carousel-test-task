@@ -3,8 +3,8 @@
     <img
       :src="imageSrc"
       :alt="item_data.alt"
-      width="300"
-      height="200"
+      width="100%"
+      height="auto"
       class="carousel-image"
     />
   </div>

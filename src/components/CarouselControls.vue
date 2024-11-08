@@ -29,12 +29,8 @@ const props = defineProps({
 <style scoped>
 .carousel-controls {
   display: flex;
-  justify-content: space-between;
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  transform: translateY(-50%);
-  z-index: 1;
+  justify-content: center;
+  gap: 24px;
 }
 
 .nav-button {
