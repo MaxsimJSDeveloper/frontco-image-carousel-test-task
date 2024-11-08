@@ -2,12 +2,12 @@
   <div class="carousel-controls">
     <button class="nav-button prev" @click="onPrevClick">
       <svg width="16" height="16">
-        <use href="../../src/assets/symbol-defs.svg#icon-arrow-right"></use>
+        <use href="/symbol-defs.svg#icon-arrow-right"></use>
       </svg>
     </button>
     <button class="nav-button next" @click="onNextClick">
       <svg width="16" height="16">
-        <use href="../../src/assets/symbol-defs.svg#icon-arrow-right"></use>
+        <use href="/symbol-defs.svg#icon-arrow-right"></use>
       </svg>
     </button>
   </div>
