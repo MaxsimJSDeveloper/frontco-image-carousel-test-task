@@ -1,6 +1,12 @@
 <template>
-  <div>
-    <img :src="imageSrc" :alt="item_data.alt" width="300" height="200" />
+  <div class="carousel-item">
+    <img
+      :src="imageSrc"
+      :alt="item_data.alt"
+      width="300"
+      height="200"
+      class="carousel-image"
+    />
   </div>
 </template>
 
@@ -23,5 +29,9 @@ export default {
 </script>
 
 <style scoped>
-/* Можно добавить стили для слайдов, если необходимо */
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 </style>

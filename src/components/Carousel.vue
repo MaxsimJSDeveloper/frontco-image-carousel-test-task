@@ -2,14 +2,25 @@
   <div class="wrapper">
     <div class="carousel" :style="carouselStyle">
       <CarouselItem
-        v-for="(item, index) in images"
+        v-for="item in images"
         :key="item.id"
         :item_data="item"
-        class="carousel-item"
+        :class="[
+          'carousel-item',
+          { selected: selectedImages.includes(item.alt) },
+        ]"
+        @click="toggleSelection(item.alt)"
       />
     </div>
-
     <CarouselControls :onPrevClick="prevSlide" :onNextClick="nextSlide" />
+    <div class="selected-images">
+      <h3>Selected Images:</h3>
+      <ul>
+        <li v-for="(alt, index) in selectedImages" :key="index">
+          {{ alt }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -27,18 +38,18 @@ export default {
     images: {
       type: Array,
       required: true,
-      default: () => [],
     },
   },
   data() {
     return {
       currentSlideIndex: 0,
-      slidesPerPage: 1, // Default to 1 slide per page
+      slidesPerPage: 1,
+      selectedImages: [],
     };
   },
   computed: {
     carouselStyle() {
-      const slideWidth = 100 / this.slidesPerPage; // Adjust slide width based on slides per page
+      const slideWidth = 100 / this.slidesPerPage;
       const translateX = -(this.currentSlideIndex * slideWidth) + "%";
       return {
         transform: `translateX(${translateX})`,
@@ -55,20 +66,29 @@ export default {
   },
   methods: {
     updateSlidesPerPage() {
-      this.slidesPerPage = window.innerWidth >= 768 ? 3 : 1; // 3 slides on desktop, 1 slide on mobile
+      this.slidesPerPage = window.innerWidth >= 768 ? 3 : 1;
     },
     prevSlide() {
       if (this.currentSlideIndex > 0) {
         this.currentSlideIndex--;
       } else {
-        this.currentSlideIndex = this.images.length - this.slidesPerPage; // Loop back to last slide
+        this.currentSlideIndex = this.images.length - this.slidesPerPage;
       }
     },
     nextSlide() {
       if (this.currentSlideIndex < this.images.length - this.slidesPerPage) {
         this.currentSlideIndex++;
       } else {
-        this.currentSlideIndex = 0; // Loop back to first slide
+        this.currentSlideIndex = 0;
+      }
+    },
+    toggleSelection(imageAlt) {
+      if (this.selectedImages.includes(imageAlt)) {
+        this.selectedImages = this.selectedImages.filter(
+          (alt) => alt !== imageAlt
+        );
+      } else {
+        this.selectedImages.push(imageAlt);
       }
     },
   },
@@ -77,7 +97,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  max-width: 900px; /* Adjust the max-width for desktop */
+  max-width: 900px;
   overflow: hidden;
   margin: 0 auto;
   position: relative;
@@ -86,29 +106,38 @@ export default {
 .carousel {
   display: flex;
   width: 100%;
+  gap: 16px;
+  transition: transform 0.5s ease;
 }
 
 .carousel-item {
-  flex: 0 0 33.33%; /* Adjust the flex-basis for desktop */
+  flex: 0 0 calc(33.3% - 16px);
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.carousel-item.selected {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.selected-images {
+  margin-top: 20px;
+}
+
+.selected-images ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 @media (max-width: 767px) {
   .wrapper {
-    max-width: 300px; /* Adjust the max-width for mobile */
+    max-width: 300px;
   }
 
   .carousel-item {
-    flex: 0 0 100%; /* One slide per page on mobile */
+    flex: 0 0 100%;
+    margin-bottom: 16px;
   }
-}
-
-.carousel-controls {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  transform: translateY(-50%);
-  z-index: 1;
 }
 </style>

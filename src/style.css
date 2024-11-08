@@ -1,17 +1,17 @@
-/* @font-face {
-  font-family: "Titillium Web";
-  src: url("./fonts/TitilliumWeb-Regular.ttf");
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Regular.woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-} */
+}
 
 * {
   scroll-behavior: smooth;
 }
 
 body {
-  /* font-family: "Titillium Web", sans-serif; */
+  font-family: "Roboto", sans-serif;
   font-weight: 400;
   letter-spacing: 0.04em;
   color: #000;
